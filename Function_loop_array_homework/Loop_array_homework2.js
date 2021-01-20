@@ -70,9 +70,40 @@ let teamPoints = calculateBasketballPoint(twoPointInput, threePointInput)
 // pigs = 4 legs
 // Example: howManyLegs(5, 2, 8)
 // output: 50
-let 
 
 
+
+let chickens = parseInt(prompt("How many chickens do you have"));
+let cows = parseInt(prompt("How many cows do you have"));
+let pigs = parseInt(prompt('How many pig do you have'));
+
+let sumOfLegs = (chickens * 2) + (cows * 4) + (pigs * 4);
+console.log(sumOfLegs);
+/*let inputAnimal = prompt("Write chicken, cow or pig");
+if (inputAnimal === "chicken") {
+    numOfChicken = parseInt(prompt("How many chickens do you have"));
+    if (typeof(numOfChicken) === 'number' && !isNaN) {
+        chickens = numOfChicken * 2;
+        return chickens;
+    }
+}
+if (inputAnimal === 'cow') {
+    numOfCow = parseInt(prompt("How many cows do you have"));
+    if (typeof(numOfCow) === 'number' && !isNaN) {
+        cows = numOfCow * 4;
+        return cows;
+    }
+}
+if (inputAnimal === 'pig') {
+    numOfPig = parseInt(prompt('How many pig do you have'));
+    if (typeof(numOfPig) === numOfPig && !isNaN) {
+        pigs = numOfPig * 4;
+        return pigs;
+    }
+}
+let sumOfLegs = chickens + cows + pigs;
+console.log (sumOfLegs);   
+*/
 
 // ------------ Task 05 ------------
 // Some basic arithmetic operators are +, -, *, /, and %. In this challenge you will be given three parameters, num1, num2, and an operator. Use the operator on number 1 and 2.
