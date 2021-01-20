@@ -9,6 +9,7 @@
 // Example: isOddOrEven(3)
 // Output 'Number 3 is odd number.'
 let input = Number(prompt(`Please type in a number to check if it is an "even" or "odd"`));
+
 function OddOrEvenNum (number) {
     if (typeof (number) === "number" && !isNaN(number)) {
         if (number % 2 === 0) {
