@@ -38,6 +38,7 @@ submitButton.addEventListener('click', function() {
 	addValuesToString(inputFirstName.value, inputLastName.value, inputEmail.value, inputPassword.value);
 });
 
+// Homework
 let userInput = document.getElementById('divInput').children;
 let rowsInput = document.getElementById('rows');
 let columnsInput = document.getElementById('columns');
