@@ -25,19 +25,13 @@ function findAllNumbersBetween() {
 }
 var newArray = findAllNumbersBetween();
 
-
-
-var balance = 1000;
-
-
-
 // var userFunction = prompt(`Please enter 
 // 1. Deposit
 // 2. Withdrawal
 // 3. Balance
 // 4. Exit`);
 
-
+var balance = 1000;
 atm();
 function atm(){
     var userFunction = prompt(`Please enter 
@@ -116,12 +110,14 @@ element.autocomplete = "on/off"
 */
 
 let usersArray = [];
-var regButton = document.getElementById('registerBtn');
+
 var userName = document.getElementById('userName').value;
 var userPassword = document.getElementById('password').value;
-regButton.addEventListener('click', function () {
-    usersArray.push('')
-    
-})
+console.log(userName, userPassword);
 
-
+var regButton = document.getElementById('registerBtn');
+regButton.addEventListener('click', function (userName, userPassword) {
+    debugger
+    usersArray.push(userName, userPassword);
+}, false);
+console.log(usersArray);
