@@ -22,14 +22,16 @@ function findAllNumbersBetween() {
         else {continue};
     }
     console.log(result1);
+    return result1;
 }
 var newArray = findAllNumbersBetween();
+console.log('final result', newArray);
 
-// var userFunction = prompt(`Please enter 
-// 1. Deposit
-// 2. Withdrawal
-// 3. Balance
-// 4. Exit`);
+// // var userFunction = prompt(`Please enter 
+// // 1. Deposit
+// // 2. Withdrawal
+// // 3. Balance
+// // 4. Exit`);
 
 var balance = 1000;
 atm();
@@ -47,7 +49,6 @@ if (userFunction === "Deposit") {
         console.log(`You deposited ${deposit}. Balance account = ${balance}`);      
     }
     else {console.log('please write only numbers')};
-    return atm();
 };
 if (userFunction === 'Withdrawal') {
     var withdrawal = 0;
@@ -63,16 +64,15 @@ if (userFunction === 'Withdrawal') {
        }         
     }
     else {'please write only numbers'};
-    return atm();
 };
 if (userFunction === 'Balance') {
     console.log(`Your account balance is ${balance}`);
-    return atm();
 };
 if (userFunction === 'Exit') {
-    return alert('Thank you for using our ATM');
-};
-return balance;
+    alert('Thank you for using our ATM');
+    return;
+}
+else {atm()};
 }
 
 /* 
@@ -109,15 +109,96 @@ from code academy1 to everyone:    12:15 PM
 element.autocomplete = "on/off"
 */
 
-let usersArray = [];
+function User(name, pass, isAdmin){
+    this.username = name;
+    this.password = pass;
+    this.isAdmin = isAdmin;
+}
 
-var userName = document.getElementById('userName').value;
-var userPassword = document.getElementById('password').value;
-console.log(userName, userPassword);
+let usersArray = [];  
+usersArray.push(new User('Goran', '122', true));
 
+var userName = document.getElementById('userName');
+var userPassword = document.getElementById('password');
 var regButton = document.getElementById('registerBtn');
-regButton.addEventListener('click', function (userName, userPassword) {
-    debugger
-    usersArray.push(userName, userPassword);
+let logButton = document.getElementById('loginBtn');
+let result = document.getElementById('msg');
+let logoutBtn = document.getElementById('logOutBtn');
+let loggedUser = null;
+let adminList = document.getElementById('list');
+//console.log(userName, userPassword); - sekogas prazno bidejki ne e stisnato kopceto i ne e zemen inputot. 
+
+//guard scenario . validacii.
+
+function isValid(name, password) {
+    //guard scenarija .
+    if (name.length < 6 && password.length < 3) {
+        return false;
+    }
+    return true;
+}
+
+// if(!loggedUser) {
+//     return
+// }
+// happy case scenarios
+
+
+regButton.addEventListener('click', function () {
+    // if(!isValid(userName.value, userPassword.value))
+    if (isValid(userName.value, userPassword.value) === false ) {
+        alert('empty inputs');
+        return     
+    }
+
+    // if (userName.value === "" && userPassword.value === "") {
+    //     alert('Empty inputs');
+    //     return
+    // }
+    usersArray.push(new User(userName.value, userPassword.value, false));
+    console.log(usersArray);
+    userName.value = ""; // so ova se brishe inputot. 
+    userPassword.value = "";
 }, false);
-console.log(usersArray);
+
+
+
+logButton.addEventListener('click', function(){
+    for (let element of usersArray) {
+        if (userName.value === element.username) {
+            // check if user exists
+            //check if password exist
+            // write the msg that he is logged in
+            // mora da imam break bidejki kje prodolzi da izvrshuva iako e zadovolen uslovot,  i posledniot else kje se izvrshi
+            if (userPassword.value === element.password) {
+                result.innerText = `Welcome ${element.username}!`
+                loggedUser = element;
+                if (loggedUser.isAdmin) {
+                    for (let element of usersArray) {
+                        adminList.innerHTML += `<li>User name:${element.username}. Password:${element.password}</li>`
+                    }
+                }
+            }
+            else {
+                result.innerText = `Incorect password`
+            }
+            break
+        }
+        else {
+            result.innerText = `the user ${userName.value} does not exist`
+        }
+    }
+    userName.value = "";
+    userPassword.value = "";
+});
+
+logoutBtn.addEventListener('click', function(){
+    result.innerText = `${loggedUser.username} is logged out`
+    userName.value = "";
+    userPassword.value = "";
+    loggedUser = null;
+}, false);
+
+console.log(userName.value, userPassword.value)
+
+    // usersArray.push(userName, userPassword);
