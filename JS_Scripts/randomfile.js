@@ -50,7 +50,6 @@ Potrebno e da se povikaat site sliki
         $.ajax({
             url: "https://jsonplaceholder.typicode.com/photos",
             success: function(result){
-                // the result is always JS object; it is automatically converted!!!
                 console.log('Success!');
             },
             error: function(){
@@ -63,5 +62,4 @@ Potrebno e da se povikaat site sliki
             }
         });
     })
-
 })
