@@ -41,6 +41,27 @@ $(document).ready(function(){
     })
 
 /* 
-5.Use this link https://api.openaq.org/v1/cities to make ajax call with jQuery. The returned data need to be shown in unordered list. */
+5.Use this link https://api.openaq.org/v1/cities to make ajax call with jQuery. The returned data need to be shown in unordered list. 
+Potrebno e da se povikaat site sliki
+ */
+
+    $('#ajaxBtn').click(function(){
+        
+        $.ajax({
+            url: "https://jsonplaceholder.typicode.com/photos",
+            success: function(result){
+                // the result is always JS object; it is automatically converted!!!
+                console.log('Success!');
+            },
+            error: function(){
+                console.error('Error occured!');
+            }
+        })
+        .done(function(data) {
+            for(let i = 0; i < 10; i++ ){
+                $("#resultList").append(`<li><img src="${data[i].thumbnailUrl}"></li>`);
+            }
+        });
+    })
 
 })
