@@ -18,41 +18,29 @@ let longestRecipe = document.getElementById('btnLongest');
 let shortestRecipe = document.getElementById('btnShortest');
 let showAll = document.getAnimations('btnAll');
 let recipies = [];
+//da napravam object od sekoj recept so 3 property name/ingredients[array]/time.
+// potoa tie objekti da gi skladiram vo array za polesen pristap i precatenje
+
+//kako da napravam array od ingredients. vo zadacata pisuva 'STRINGS' , megutoa kako da vodam kontrola sto vnesuva userot i kako da gi razdelam. mozam da iskoristam slice i " " i na toj nacin posle sekoe prazno mesto kje gi dvoi.
 
 
-// da kreiram konstruktor koj kje skladira recept kako objekt so 3 property ime , sostojki i vreme za podgotovka
+
+// object constructor
 function ObjectRecipe(name, ingredients, time) {
     this.name = name,
     this.ingredients = ingredients,
     this.time = time
 };
-
+//creating an array of recipe objects
 function createRecipeArray(name, ingredient, time){
-    recipies.push(new ObjectRecipe(name.value, ingredient.value, parseInt(timeInput.value)));
+    // let name = nameinput.value;
+    // let ingredient = ingredientInput.value;
+    // let time = parseInt(timeInput.value);
+    // se obidov vaka no mi javuvashe deka se vekje deklarirani. ne zabelezav kade
+    //potoa se obidov da gi deklariram podolu i mi uspea.
+    recipies.push(new ObjectRecipe(name, ingredient, time));
 }
-
-button.addEventListener('click', function(){
-    //1.check for empty input
-    if(!nameInput.value && !ingredientInput.value && !timeInput){
-        alert(`not a valid input`);
-        return;
-    }
-    //2.call function for creating object and pushing the object in array
-    createRecipeArray(nameInput, ingredientInput, timeInput);
-    //3.call function for printing in table
-    printingRecipe(recipies, table);
-    //4.i need to clear the inputs. make a function
-    clearForm();
-    //5. the delete button is tricky. i defined it inside the function thus its local. i need to make it global.
-    //what if i put all the next code here? 
-    //how to delete the coresponding row?
-    let delBtn = document.getElementById('btnDelete');
-    //6. the last part is hard. the buttons need to react with the table. I can read the time from the array of recipies but how to connect it with the corresponding table row.     
-})
-
-
-
-
+//creating a function for printing objects from array in table
 function printingRecipe(recipe, element) {
     for(let item of recipe) {
         element.innerHTML += `
@@ -77,22 +65,33 @@ function printingRecipe(recipe, element) {
         `
     }
 }
-
+//function for clearing the input fields
 function clearForm(){
     nameInput.value = "";
     ingredientInput.value = "";
     timeInput.value = "";
 }
-
-/*
-sekoj recept da bide object so 3 property naziv / sostojki / vreme za podgotovka. 
-potoa sekoj object da se pushne vo array za polesen pristap
-
-problemot e vo brojot na sostojki. kako da definiram kolku sostojki kje ima eden recept ? 
-sostojkite da bidat eden array vo objektot. da ne formiram povekje objecti so ist naziv a razlicni sostojki.
-
-so klick na kopce add da se :
-1. dodadat vo object
-2. objectite ( recipes) da se dodadat vo array
-3. 
-*/
+//finnaly the app
+button.addEventListener('click', function(){
+    let name = nameInput.value;
+    let ingredient = ingredientInput.value;
+    let time = parseInt(timeInput.value);
+    //1.check for empty input
+    if(!name && !ingredient && !time){
+        alert(`not a valid input`);
+        return;
+    }
+    //2.call function for creating object and pushing the object in array
+    createRecipeArray(name, ingredient, time);
+    //3.call function for printing in table
+    printingRecipe(recipies, table);
+    //4.i need to clear the inputs. make a function
+    clearForm();
+    //5. the delete button is tricky. i defined it inside the function thus its local. i need to make it global.
+    //what if i put all the next code here? 
+    //how to delete the coresponding row?
+    let delBtn = document.getElementById('btnDelete');
+    //6. the last part is hard. the buttons need to react with the table. I can read the time from the array of recipies but how to connect it with the corresponding table row. 
+    // maybe i can overwrite the whole table. 
+    // i need to use .hide  and .show    
+})
