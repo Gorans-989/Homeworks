@@ -40,6 +40,9 @@ function createRecipeArray(name, ingredient, time){
     //potoa se obidov da gi deklariram podolu i mi uspea.
     recipies.push(new ObjectRecipe(name, ingredient, time));
 }
+//sekoj pat koga ja povikuvam funkcijata print zapocnuva da go vrti arrayot od pocetok i gi printa site objekti (znaci se dupliraat vekje isprintanite). Sto ako go ispraznam arrayot na krajot na sekoe vrtenje? mi uspea na 93 linija. Dali e podobro da go dodadam vo funkcijata clear form?
+
+
 //creating a function for printing objects from array in table
 function printingRecipe(recipe, element) {
     for(let item of recipe) {
@@ -87,6 +90,7 @@ button.addEventListener('click', function(){
     printingRecipe(recipies, table);
     //4.i need to clear the inputs. make a function
     clearForm();
+    recipies = [];
     //5. the delete button is tricky. i defined it inside the function thus its local. i need to make it global.
     //what if i put all the next code here? 
     //how to delete the coresponding row?
