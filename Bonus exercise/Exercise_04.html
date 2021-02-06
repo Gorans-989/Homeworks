@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        } 
+    </style>
+</head>
+<body>
+    <div>
+        <input type="text" id="name" placeholder="recipe name"><br/>
+        <input type="text" id="ingredients" placeholder="ingredients"><br/>
+        <input type="number" id="time" placeholder="time to make" min="0"><br/>
+        <button id="btnAdd">ADD recipe</button>
+    </div>
+
+    <div>
+        <table>
+            <tbody style="border: 1px solid black;" id="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Ingredient</th>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <button id="btnLongest">Show longest recipe</button>
+        <button id="btnShortest">Show shortest recipe</button>
+        <button id="btnAll">Show all recipes</button>
+    </div>
+
+
+
+
+    <script src="./Exercise_04.js"></script>
+</body>
+</html>
