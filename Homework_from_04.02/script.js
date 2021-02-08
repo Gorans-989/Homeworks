@@ -31,8 +31,8 @@ function StudentObject(firstName, lastName, birthYear, academy, grades){
     this.lastName = lastName,
     this.birthYear = birthYear,
     this.academy = academy,
-    this.grades = [grades],
-
+    this.grades = [grades],//is this a valid declaration of an array? what is the point. how to create an array of number from one input
+//i converted the input from birth year into a number but the function returns NaN. i need to parse it into a date.
     this.getAge = function(){
         let todayYear = new Date();
         return todayYear.getFullYear - this.birthYear;
