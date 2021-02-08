@@ -14,9 +14,9 @@ let ingredientInput = document.getElementById('ingredients');
 let timeInput = document.getElementById('time');
 let button = document.getElementById('btnAdd');
 let table = document.getElementById('table');
-let longestRecipe = document.getElementById('btnLongest');
-let shortestRecipe = document.getElementById('btnShortest');
-let showAll = document.getAnimations('btnAll');
+let longestRecipeBtn = document.getElementById('btnLongest');
+let shortestRecipeBtn = document.getElementById('btnShortest');
+let showAllBtn = document.getAnimations('btnAll');
 let recipies = [];
 //da napravam object od sekoj recept so 3 property name/ingredients[array]/time.
 // potoa tie objekti da gi skladiram vo array za polesen pristap i precatenje
@@ -44,22 +44,14 @@ function createRecipeArray(name, ingredient, time){
 
 
 //creating a function for printing objects from array in table
-function printingRecipe(recipe, element) {
-    for(let item of recipe) {
+function printingRecipe(array, element) {
+        element.innerHTML = "";// i clean the html every time i click the button because i dont want to repeat the same array item every time
+    for(let i =  0; i < array.length; i++) {
         element.innerHTML += `
             <tr>
                 <td>
-                    ${item.name}    
+                    ${array[i].name} ${array[i].ingredients} ${array[i].time}   
                 </td>
-                
-                <td>
-                    ${item.ingredients}
-                </td>
-                
-                <td>
-                    ${item.time}
-                </td>
-
                 <td>
                     <button id="btnDelete"> Delete </button>
                 </td>
@@ -84,18 +76,26 @@ button.addEventListener('click', function(){
         alert(`not a valid input`);
         return;
     }
-    //2.call function for creating object and pushing the object in array
-    createRecipeArray(name, ingredient, time);
-    //3.call function for printing in table
-    printingRecipe(recipies, table);
-    //4.i need to clear the inputs. make a function
-    clearForm();
-    recipies = [];
-    //5. the delete button is tricky. i defined it inside the function thus its local. i need to make it global.
-    //what if i put all the next code here? 
-    //how to delete the coresponding row?
-    let delBtn = document.getElementById('btnDelete');
-    //6. the last part is hard. the buttons need to react with the table. I can read the time from the array of recipies but how to connect it with the corresponding table row. 
-    // maybe i can overwrite the whole table. 
-    // i need to use .hide  and .show    
+    else {
+        //2.call function for creating object and pushing the object in array
+        createRecipeArray(name, ingredient, time);
+        //3.call function for printing in table
+        printingRecipe(recipies, table);
+        //4.i need to clear the inputs. make a function
+        clearForm();
+        //5. the delete button is tricky. i defined it inside the function thus its local. i need to make it global.
+        //what if i put all the next code here? 
+        //how to delete the coresponding row?
+        let delBtn = document.getElementById('btnDelete');
+        //6. the last part is hard. the buttons need to react with the table. I can read the time from the array of recipies but how to connect it with the corresponding table row. 
+        // maybe i can overwrite the whole table. 
+        // i need to use .hide  and .show
+    }
 })
+
+// longestRecipeBtn.addEventListener('click', function(){
+//     table.innerHTML.hide();
+
+// })
+// shortestRecipeBtn
+// showAllBtn
