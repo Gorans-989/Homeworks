@@ -32,13 +32,13 @@ function ObjectRecipe(name, ingredients, time) {
     this.time = time
 };
 //creating an array of recipe objects
-function createRecipeArray(name, ingredient, time){
+function createRecipeArray(name, ingredients, time){
     // let name = nameinput.value;
     // let ingredient = ingredientInput.value;
     // let time = parseInt(timeInput.value);
     // se obidov vaka no mi javuvashe deka se vekje deklarirani. ne zabelezav kade
     //potoa se obidov da gi deklariram podolu i mi uspea.
-    recipies.push(new ObjectRecipe(name, ingredient, time));
+    recipies.push(new ObjectRecipe(name, ingredients, time));
 }
 //sekoj pat koga ja povikuvam funkcijata print zapocnuva da go vrti arrayot od pocetok i gi printa site objekti (znaci se dupliraat vekje isprintanite). Sto ako go ispraznam arrayot na krajot na sekoe vrtenje? mi uspea na 93 linija. Dali e podobro da go dodadam vo funkcijata clear form?
 
@@ -48,12 +48,22 @@ function printingRecipe(array, element) {
         element.innerHTML = "";// i clean the html every time i click the button because i dont want to repeat the same array item every time
     for(let i =  0; i < array.length; i++) {
         element.innerHTML += `
-            <tr>
+            <tr id = "recipeNumber${i + 1}">
                 <td>
-                    ${array[i].name} ${array[i].ingredients} ${array[i].time}   
+                    ${i + 1}   
                 </td>
                 <td>
-                    <button id="btnDelete"> Delete </button>
+                    ${array[i].name}   
+                </td>
+                <td>
+                    ${array[i].ingredients}    
+                </td>
+                <td>
+                    ${array[i].time}   
+                </td>
+                    
+                <td>
+                    <button id="btnDelete${i + 1}"> Delete </button>
                 </td>
             </tr>
     
@@ -69,16 +79,16 @@ function clearForm(){
 //finnaly the app
 button.addEventListener('click', function(){
     let name = nameInput.value;
-    let ingredient = ingredientInput.value;
+    let ingredients = ingredientInput.value;
     let time = parseInt(timeInput.value);
     //1.check for empty input
-    if(!name && !ingredient && !time){
+    if(!name && !ingredients && !time){
         alert(`not a valid input`);
         return;
     }
     else {
         //2.call function for creating object and pushing the object in array
-        createRecipeArray(name, ingredient, time);
+        createRecipeArray(name, ingredients, time);
         //3.call function for printing in table
         printingRecipe(recipies, table);
         //4.i need to clear the inputs. make a function
@@ -86,13 +96,46 @@ button.addEventListener('click', function(){
         //5. the delete button is tricky. i defined it inside the function thus its local. i need to make it global.
         //what if i put all the next code here? 
         //how to delete the coresponding row?
-        let delBtn = document.getElementById('btnDelete');
+        $(document).ready(function(){
+            let i = 1;
+            $(`#btnDelete${i + 1}`).click(function(){
+                $(`#recipeNumber${i + 1}`).remove();
+            });
+            i++;
+
+            // $('#btnLongest').click(function(){
+                
+            // })
+
+            // $('#btnShortest')
+            // $('#btnAll')
+
+
+
+        })
+
         //6. the last part is hard. the buttons need to react with the table. I can read the time from the array of recipies but how to connect it with the corresponding table row. 
         // maybe i can overwrite the whole table. 
         // i need to use .hide  and .show
     }
 })
-
+function longestTimeRecipe(array){
+    let result = 0;
+    for(let item of array) {
+        if(item > result) {
+            result = item
+        }
+    }
+}
+function shortestTimeRecipe(array){
+    let result = Infinity;
+    console.log(result);
+    for(let item of array){
+        if(item < result) {
+            result = item;
+        }
+    }
+}
 // longestRecipeBtn.addEventListener('click', function(){
 //     table.innerHTML.hide();
 
