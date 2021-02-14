@@ -22,45 +22,44 @@
 Create a function that takes a number through a parameter and calls all three functions for the number that was passed. 
 It should show the results in the console. */
 
-// function lengthOfNumber(number){
-//     //ova ne mi e jasno.
-//     //neznam kako da napravam loop za da gi ispishe site cifri od brojot
-//     array = [];
-//     let counter = 0;
-//     while(number % 10 !==0 && counter < 5){
-//         result = parseInt(number % 10);
-//         array.push(result);
-//         counter ++;
-//     }
-//     return array.length;
-// }
-// function oddOrEven (number){
-//     if(number % 2 === 0) {
-//         return `even number`
-//     }
-//     else{
-//         if(number % 2 !== 0){
-//             return `odd number`
-//         }
-//     }
-// }
-// function positiveOrNegative (number){
-//     if(number < 0) {
-//         return `negative number`;
-//     }
-//     else if(number > 0) {
-//         return `positive Number`;
-//     }
-//     else if(number === 0) {
-//         return `the number is zero`;
-//     }
-// }
-// function callAll3Functions (number){
-//     console.log(lengthOfNumber(number));
-//     console.log(oddOrEven(number));
-//     console.log(positiveOrNegative(number));
-// }
-// callAll3Functions(-612257)
+function lengthOfNumber(number){
+    //ova ne mi e jasno.
+    //neznam kako da napravam loop za da gi ispishe site cifri od brojot
+    let counter = 0;
+    while(number % 10 !==0) {         
+        number = parseInt(number / 10);
+        counter ++;
+    }
+    return counter;
+}
+
+function oddOrEven (number){
+    if(number % 2 === 0) {
+        return `even number`
+    }
+    else{
+        if(number % 2 !== 0){
+            return `odd number`
+        }
+    }
+}
+function positiveOrNegative (number){
+    if(number < 0) {
+        return `negative number`;
+    }
+    else if(number > 0) {
+        return `positive Number`;
+    }
+    else if(number === 0) {
+        return `the number is zero`;
+    }
+}
+let callAll3Functions = function(number){
+    console.log(lengthOfNumber(number));
+    console.log(oddOrEven(number));
+    console.log(positiveOrNegative(number));
+}
+callAll3Functions(-6565)
 
 /*
 1. First arrow function will accept two parameters, one for element and one for color. 
