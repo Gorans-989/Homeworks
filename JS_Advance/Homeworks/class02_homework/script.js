@@ -62,4 +62,11 @@ button2.addEventListener('click', () => {
   listElement = document.getElementById(`list${i}`);
   listConstructor(items, listElement, color2.value, fontSize2.value);
   clearInput(color2, fontSize2, text2);
+  i++;
 })
+
+/*
+1. Kako da napravam dinamicno id
+2. Idejata e sledna : so sekoj klik na kopceto da se kreira <ul> so novo id i potoa da se vrzam na toa id i da dodavam novi <li> items. Dali ova se barashe vo zadacata?
+Mislam deka mi e gresen pristapot
+*/
