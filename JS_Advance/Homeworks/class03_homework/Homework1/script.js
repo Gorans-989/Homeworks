@@ -49,7 +49,7 @@ $(document).ready(function() {
             url: urlForData,
             success: function(result){
                 console.log('the call is successfull');
-            },
+            },//ja zaboraviv zapirkata i mi javi 'unexpected identifier'
             error:function(){
                 console.error('An error occured');
             }
