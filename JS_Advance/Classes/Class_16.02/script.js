@@ -1,15 +1,11 @@
 /* # Exercises
-
-## Exercise 1
 There is a JSON file with students. Make a call to the file and get the following data from it: 
-
 Use higher order functions to find the answers
 **Link:** https://raw.githubusercontent.com/sedc-codecademy/skwd9-04-ajs/main/Samples/students_v2.json
  */
 
 
  //* All students with an average grade higher than 3
-
 let averageGrade3 = studentArray.filter(x => x.averageGrade === 3);//namerno iskoristiv x kako ime na parametar za da testiram. Imeto e na promenlivata e nezavisno od property-to vo objektot sto go povikuvame
 //  console.log(averageGrade3);
 
