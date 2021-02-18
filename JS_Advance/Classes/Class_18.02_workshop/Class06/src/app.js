@@ -5,6 +5,7 @@ let navigationService = {
     nextBtn: document.getElementById("nextBtn"),
     prevBtn: document.getElementById("prevBtn"),
     currentPage:1,
+    pageType: "",
 
     //methods // functions
     init: function(){
@@ -14,26 +15,45 @@ let navigationService = {
             navigationService.currentPage = 1;
             uiService.toggleLoader(true);
             starWarsService.getPeople(navigationService.currentPage);
+            navigationService.pageType = "people";
         });
 
         this.shipsBtn.addEventListener("click", function(){
-            starWarsService.getShips();
+            navigationService.currentPage = 1;
+            uiService.toggleLoader(true);
+            starWarsService.getShips(navigationService.currentPage);
             console.log("Hello from ships");
+            navigationService.pageType = "ships";
         });
 
         this.nextBtn.addEventListener("click",function (){
             console.log("hello the next button works");
             uiService.toggleLoader(true);
             navigationService.currentPage += 1;
-            starWarsService.getPeople(navigationService.currentPage);
-            console.log(navigationService.currentPage);
+
+            if (navigationService.pageType === "people"){
+                starWarsService.getPeople(navigationService.currentPage);
+                console.log(navigationService.currentPage);
+            }
+            
+            if (navigationService.pageType === "ships") {
+                starWarsService.getShips(navigationService.currentPage);
+            }
+
         });
 
         this.prevBtn.addEventListener("click", function(){
             console.log("hello the prev button works");
             uiService.toggleLoader(true);
             navigationService.currentPage -= 1;
-            starWarsService.getPeople(navigationService.currentPage);
+            if (navigationService.pageType === "people"){
+                starWarsService.getPeople(navigationService.currentPage);
+                console.log(navigationService.currentPage);
+            }
+            
+            if (navigationService.pageType === "ships") {
+                starWarsService.getShips(navigationService.currentPage);
+            }
         });
     },
 
@@ -74,13 +94,15 @@ let starWarsService = {
             }
         });
     },
-    getShips: function(){
-        let shipUrl = `${this.baseUrl}starships/`;
+    getShips: function(page){
+        let shipUrl = `${this.baseUrl}starships/?page=${page}`;
         fetch(shipUrl)
         .then(response => response.json())
         .then(data => {
             console.log(data);
             uiService.displayShipsInfo(data.results);
+            navigationService.togglePagingButtons(data);
+            uiService.toggleLoader(false);
         })
     }
 }
@@ -140,7 +162,7 @@ let uiService = {
             let passangers = parseInt(ship.passengers);
             
             let fullCapacity = 0;
-            if(Number.isNaN(crewCapacity)) {
+            if(!Number.isNaN(crewCapacity)) {
                 fullCapacity += crewCapacity;
             }
 
