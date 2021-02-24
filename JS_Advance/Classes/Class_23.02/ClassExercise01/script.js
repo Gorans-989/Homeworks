@@ -32,10 +32,11 @@ let stopWatch = {
     }),
 
     resetButton: document.getElementById('reset').addEventListener('click',()=>{
-        // clearInterval(stopWatch.invalid); ako gi otkomentiram so reset kje se resetira na nula i kje go prekine intervalot.
+        // clearInterval(stopWatch.invalid);
         stopWatch.timer = 0;
         // stopWatch.invalid = null;
         stopWatch.result.innerHTML = "0";
         //idejata mi e koga kje se klikne reset timer-ot da se resetira na '0' i da prodolzi da broi.
+        //ako gi otkomentiram so reset timerot se setira na nula i prestanuva da vrti. ne pocnuva dodeka ne se pritisne start
     })
 }
