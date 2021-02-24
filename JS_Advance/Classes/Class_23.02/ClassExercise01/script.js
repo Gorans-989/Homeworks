@@ -6,35 +6,35 @@
 // The UI needs to be updated on every change of the state of the timer.
 
 
-let result = document.getElementById('result');
-let startBtn = document.getElementById('start');
-let stopBtn = document.getElementById('stop');
-let resetBtn = document.getElementById('reset');
+// let result = document.getElementById('result');
+// let startBtn = document.getElementById('start');
+// let stopBtn = document.getElementById('stop');
+// let resetBtn = document.getElementById('reset');
 
-startBtn.addEventListener('click', function(){
-    startCount();   
-})
+let stopWatch = {
+    result: document.getElementById('result'),
+    timer: 0,
+    invalid: null,
 
+    start: function(){
+        this.invalid = setInterval(()=>{
+            this.timer++;
+            this.result.innerHTML = this.timer;
+        }, 1000)
+    },
 
-let startCount = function(){
-    let timer = 0;
-    setInterval(() => {
-        result.innerText = timer;
-        timer++;
-    }, 1000);
-};
+    startButton: document.getElementById('start').addEventListener('click',()=>{ 
+        stopWatch.start();  // ne raboti ako ja povikam so this.start. pretpostavuvam deka ovoj kod ne e vo istiot scope kako start za da mozam da koristam this 
+    }),
 
-// let stopCounter = function(){
-//     clearInterval(startCount);
-// }
+    stopButton: document.getElementById('stop').addEventListener('click',()=>{
+        clearInterval(stopWatch.invalid);
+    }),
 
-stopBtn.addEventListener('click', ()=>{
-    clearInterval(startCount);
-})
-
-//var clear; function stopWatch( ) { // javascript statement here clear = setTimeout( "stopWatch( )", 1000 ); } 
-
-//Or function stopWatch( ) { // javascript statement here clear = setTimeout( function ( ) { // javascript statement here }, 1000 ); } 
-
-
-//Or var stopWatch = function ( ) { // javascript statement here clear = setTimeout( "stopWatch( )", 1000 ); } 
+    resetButton: document.getElementById('reset').addEventListener('click',()=>{
+        // clearInterval(stopWatch.invalid); ako gi otkomentiram so reset kje se resetira na nula i kje go prekine intervalot.
+        stopWatch.timer = 0;
+        // stopWatch.invalid = null;
+        stopWatch.result.innerHTML = "0";
+    })
+}
