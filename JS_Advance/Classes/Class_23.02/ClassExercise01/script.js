@@ -14,16 +14,18 @@
 let stopWatch = {
     result: document.getElementById('result'),
     timer: 0,
-    invalid: null,
+    invalid: null,// da prasam zosto ja pravime proverkata if (stopWatch.invalid)
 
     start: function(){
+
+        // ako pritisnam 2 pati na start se ubrzuva i potoa ne raboti stop.
         this.invalid = setInterval(()=>{
             this.timer++;
             this.result.innerHTML = this.timer;
         }, 1000)
     },
 
-    startButton: document.getElementById('start').addEventListener('click',()=>{ 
+    startButton: document.getElementById('start').addEventListener('click',()=>{
         stopWatch.start();  // ne raboti ako ja povikam so this.start. pretpostavuvam deka ovoj kod ne e vo istiot scope kako start za da mozam da koristam this 
     }),
 
@@ -32,9 +34,9 @@ let stopWatch = {
     }),
 
     resetButton: document.getElementById('reset').addEventListener('click',()=>{
-        // clearInterval(stopWatch.invalid);
+        clearInterval(stopWatch.invalid);
         stopWatch.timer = 0;
-        // stopWatch.invalid = null;
+        stopWatch.invalid = null;
         stopWatch.result.innerHTML = "0";
         //idejata mi e koga kje se klikne reset timer-ot da se resetira na '0' i da prodolzi da broi.
         //ako gi otkomentiram so reset timerot se setira na nula i prestanuva da vrti. ne pocnuva dodeka ne se pritisne start
