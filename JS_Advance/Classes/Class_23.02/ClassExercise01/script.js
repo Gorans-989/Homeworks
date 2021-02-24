@@ -36,5 +36,6 @@ let stopWatch = {
         stopWatch.timer = 0;
         // stopWatch.invalid = null;
         stopWatch.result.innerHTML = "0";
+        //idejata mi e koga kje se klikne reset timer-ot da se resetira na '0' i da prodolzi da broi.
     })
 }
