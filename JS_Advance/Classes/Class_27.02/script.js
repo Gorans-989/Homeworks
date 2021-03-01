@@ -1,6 +1,6 @@
 /*
-da napravam 3 servisi :
- 1.Prvo za aplikacijata - tuka se povikuvaat site funkcii da se izvrshata i 
+da napravam servisi :
+ 1.Prvo za aplikacijata - tuka se povikuvaat site funkcii da se izvrshat
  2.Data processing  -   tuka se pravat site obrabotki na podatoci
  3.Api service    -     tuka se povicite kon api-to  
  */
@@ -175,4 +175,3 @@ function ApiService(){
 
 let app = new App();
 app.init();
-console.log(app.selectionList.value);
