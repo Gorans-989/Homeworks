@@ -1,4 +1,4 @@
-/*function Academy(name,start, end){
+function Academy(name,start, end){
     this.name = name;
     this.students = [students]; //
     this.subjects = [subjects];//
@@ -52,8 +52,8 @@ function Student (name, lastName, age) {
     this.startAcademy = null;//
     this.startSubject = "";//;
 }
-*/
 
+/*
 let hero = {
     fname: 'Batman',
     realName: 'Bruce Wayne',
@@ -64,7 +64,10 @@ let hero = {
     },
     gadgets:["batmobile", "smoke", "grapling gun"]
 };
-  
+
+hero.car = "batmobile";
+hero.comicStudio = "DC"
+console.log(hero);
  //
  
 
@@ -73,9 +76,34 @@ let hero = {
 const {fname, realName, skills,gadgets, age = 35} = hero;
 console.log(fname, realName, skills, gadgets);
 
-console.log(gadgets);
+// console.log(gadgets);
 
 let rgb = [255, 200, 0];
 
 const [goran, zoran, mile] = rgb;
-console.log(goran, zoran, mile);
+// console.log(goran, zoran, mile);
+*/
+function Person(firstName, lastName, age){
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.age = age;
+    this.getFullName = () => {
+        return console.log(`${this.firstName} ${this.lastName}`);
+    }
+}
+
+function Student (academy, studentId, firstName, lastName, age){
+    Object.setPrototypeOf(this, new Person(firstName, lastName, age));
+    this.academyName = academy;
+    this.studentId = studentId;
+    this.study = function() {
+        return console.log(`The student ${this.firstName} is going on ${this.academyName} academy`)
+    }
+}
+
+let student = new Student('Web development', 1, "goran", "stojanovski", 31);
+let student2 = Object.create(new Student('Web Design', 2, 'Ivana', 'valiseva', 26));
+
+student.prototype.showAcademy = function() {
+    
+}
