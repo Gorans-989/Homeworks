@@ -35,11 +35,11 @@ function Authors (firstName, lastName, yearOfBirth) {
     this.books = [];
     this.currentBook = null;
     this.startBook = function (bookObject) {
-        this.currentBook === null? []:this.books.push(this.currentBook);
+        //this.currentBook === null? []:this.books.push(this.currentBook);
 
-        // if(this.currentBook !== null) {
-        //     this.books.push(this.currentBook);
-        // }
+        if(this.currentBook !== null) {
+            this.books.push(this.currentBook);
+        }
         this.currentBook = Object.create(bookObject);
     }
 }
