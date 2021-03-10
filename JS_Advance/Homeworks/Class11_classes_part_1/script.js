@@ -49,6 +49,8 @@ class Person {
     fullName = () => {
         return console.log(`${this.firstName} ${this.lastName}`);
     }
+
+    // ne mi se jasni getter i setter!
     // get something () {
     //     // log a message
     //     console.log(`(get) The result is:_________`)
@@ -78,7 +80,7 @@ class Student extends Person {
                 console.log(`The student ${student.firstName} ${student.lastName} is already studying ${subject}`);
             }
             else {
-                console.log(`The student ${student.firsName} ${student.lastName} doesnt study ${subject}`);
+                console.log(`The student ${student.firstName} ${student.lastName} doesnt study ${subject}`);
             }
         }
         else { throw new Error ("The first parameter is not a student")}
@@ -88,4 +90,6 @@ class Student extends Person {
 let student1 = new Student('ivan', 'ivanov', 23, 'partizanska', ['math', 'science', 'biology'], 'semos');
 let student2 = new Student('iva', 'petrova', 31, 'razloska', ["history", "english", "science"], 'different');
 
-Student.studentMethod(student1, "science")
+Student.studentMethod(student1, "science");
+Student.studentMethod(student2, "fizicko");
+Student.studentMethod(dog, "english");
