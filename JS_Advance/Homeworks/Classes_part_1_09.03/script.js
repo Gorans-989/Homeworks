@@ -11,11 +11,7 @@ class Animal {
         if (input instanceof Animal) {
 
             if (this.type === "herbivore") {
-                //prvicno samo so console.log ne funkcionirashe. nemashe eror tuku dobiv string bez this.animal (prazno mesto dade)
                 console.log(`The animal ${this.name} is a herbivore and does not eat other animals`);
-
-                // this.result = `The animal ${this.name} is a herbivore and does not eat other animals`;
-                // console.log(this.result);
             }
             if (this.type !== "herbivore") {    
                 if (input.size / 2 >= this.size) {
@@ -34,7 +30,7 @@ class Animal {
     }
 }
 let typeOfAnimal = ["carnivore", "herbivore", "omnivore"];
-let dog = new Animal ("boki", 12, typeOfAnimal[1], 120);
+let dog = new Animal ("sputnik", 12, typeOfAnimal[1], 120);
 let elephant = new Animal ('dambo', 6, typeOfAnimal[1], 500);
 let crocodile = new Animal ('koko', 7, typeOfAnimal[0], 250);
 let tiger = new Animal ('misko', 9, typeOfAnimal[2], 300);
