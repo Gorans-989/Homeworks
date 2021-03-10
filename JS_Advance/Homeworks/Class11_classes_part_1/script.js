@@ -8,12 +8,17 @@ class Animal {
     }
 
     eat(input) {
+        //ne mi teknuva drug nacin osven so if funkcii
         if (input instanceof Animal) {
-
+            //  
             if (this.type === "herbivore") {
                 console.log(`The animal ${this.name} is a herbivore and does not eat other animals`);
             }
-            if (this.type !== "herbivore") {    
+            if (this.type !== "herbivore") {  
+                //probav da go skratam ama ne mi se dopagja, ne e citko
+                // input.size / 2 >= this.size? console.log(`The animal ${this.name} tried to eat the ${input.name} but it was too large`): input.isEaten = true && console.log (`The animal ${this.name} ate the ${input.name}`
+                // )
+
                 if (input.size / 2 >= this.size) {
                     console.log (`The animal ${this.name} tried to eat the ${input.name} but it was too large`)
                 }
@@ -74,6 +79,7 @@ class Student extends Person {
         this.academy = academy;
         this.subjects = subjects;
     }
+
     static studentMethod (student, subject) {
         if(student instanceof Student) {
             if (student.subjects.includes(subject)) {
