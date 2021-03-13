@@ -27,8 +27,7 @@ class Animal {
                     console.log (`The animal ${this.name} ate the ${input.name}`
                     )
                 }
-            }
-            else if (!(input instanceof Animal)) {
+            } else if (!(input instanceof Animal)) {
                 console.log (`The animal ${this.name} is eating ${input}`);
             }
         }
