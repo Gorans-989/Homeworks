@@ -9,69 +9,112 @@ function App (){
     this.result = document.getElementById('result');
     this.nextBtn = document.getElementById('nextBtn');
     this.prevBtn = document.getElementById('previousBtn');
+    this.selectionSizePerPage = document.getElementById('resultsPerPage');
+    this.sortBy = document.getElementById('sortBy');
 
+    this.beersPerPage = 25;
     this.currentPage = 1;
+    this.maxPage = 0;
+    this.sortOption = "";
     
-
 
     this.init = function (){
         this.allBeers.addEventListener('click', () => {
             this.currentPage = 1;
-            this.dataProcessingService.getAllbeers(this.currentPage, this.result);
-            this.dataProcessingService.showButtons(this.nextBtn, this.prevBtn, this.currentPage);
+            this.sortOption = "name-asc";
+            this.maxPage = Math.ceil(325 / this.beersPerPage);
+            this.dataProcessingService.getAllbeers(this.currentPage, this.result,this.beersPerPage, this.sortOption);
+            this.dataProcessingService.showButtons(this.nextBtn, this.prevBtn, this.currentPage, this.maxPage);
+            this.showSortingAndPerPage();
         })
 
         this.beerBar.addEventListener('click', () => {
             this.removeBtns();
+            this.hideSortingAndPerPage();
             this.dataProcessingService.showBeerBar(this.result);
 
         })
 
         this.randomBeer.addEventListener('click', () => {
             this.removeBtns();
+            this.hideSortingAndPerPage();
             this.dataProcessingService.getRandomBeer(this.result);
-             
-
         })
         
         this.searchBtn.addEventListener('click', () => {
             this.removeBtns();
+            this.hideSortingAndPerPage();
             let searchName = this.searchInput.value;
             this.dataProcessingService.searchByBeerName(searchName, this.result);
         })
 
         this.nextBtn.addEventListener('click',() => {
             this.currentPage += 1;
-            this.dataProcessingService.getAllbeers(this.currentPage , this.result)
-            this.dataProcessingService.showButtons(this.nextBtn, this.prevBtn, this.currentPage);    
+            this.maxPage = Math.ceil(325 / this.beersPerPage);
+            this.dataProcessingService.getAllbeers(this.currentPage , this.result,this.beersPerPage, this.sortOption)
+            this.dataProcessingService.showButtons(this.nextBtn, this.prevBtn, this.currentPage, this.maxPage);    
         })
-    }
+    
 
         this.prevBtn.addEventListener('click', () => {
             this.currentPage -= 1;
-            this.dataProcessingService.getAllbeers(this.currentPage , this.result)
-            this.dataProcessingService.showButtons(this.nextBtn, this.prevBtn, this.currentPage); 
+            this.maxPage = Math.ceil(325 / this.beersPerPage);
+            this.dataProcessingService.getAllbeers(this.currentPage , this.result, this.beersPerPage, this.sortOption)
+            this.dataProcessingService.showButtons(this.nextBtn, this.prevBtn, this.currentPage, this.maxPage); 
         })
-    
+
+        //function to show more details of a single beer
+        this.result.addEventListener('click', (event) => {
+            this.removeBtns();
+            this.hideSortingAndPerPage();
+            let id = event.target.id
+            this.dataProcessingService.getBeerById(id, this.result);
+        })
+        //how many beer per page
+        this.selectionSizePerPage.addEventListener('change', (event) => {
+            this.beersPerPage = event.target.value;
+            this.maxPage = Math.ceil(325 / this.beersPerPage);
+            this.dataProcessingService.getAllbeers(this.currentPage, this.result, this.beersPerPage, this.sortOption);
+            this.dataProcessingService.showButtons(this.nextBtn, this.prevBtn, this.currentPage, this.maxPage);
+        })
+
+        this.sortBy.addEventListener('change', (event) => {
+            this.sortOption = event.target.value;
+            console.log(this.sortOption);
+            this.dataProcessingService.getAllbeers(this.currentPage, this.result, this.beersPerPage, this.sortOption);
+            this.dataProcessingService.showButtons(this.nextBtn, this.prevBtn, this.currentPage, this.maxPage);
+        })
+
+    }
+
+    //not needed in init function
         this.removeBtns = () => {
             this.nextBtn.style.display = "none";
             this.prevBtn.style.display = "none";
+        }; 
+
+        this.showSortingAndPerPage = function () {
+            this.selectionSizePerPage.style.display = "block";
+            this.sortBy.style.display = "block";
         };
+
+        this.hideSortingAndPerPage = function () {
+            this.selectionSizePerPage.style.display = "none";
+            this.sortBy.style.display = "none";
+        };    
 }
 
 function DataProcessingService () {
     this.apicalls = new ApiCalls();
 
-    this.getAllbeers = function(page, element) {
-        this.apicalls.getDataFromApi(page)
+    this.getAllbeers = function(page, element, resultsPerPage, sortBy) {
+        this.apicalls.getDataFromApi(page,resultsPerPage)
         .then(response => response.json())
         .then(data => this.mapBeers(data))
-        .then(beers => {
-            this.showAllBeers(beers,element)
-            console.log(beers);
-    })
+        .then(beers => this.sortingScenarios(beers, sortBy))
+        .then(beers => this.showAllBeers(beers,element))
         .catch(error => console.log(error))
-        }
+    }
 
     this.mapBeers = function(beers) {
         return new Promise ((resolve, reject) =>{
@@ -80,6 +123,7 @@ function DataProcessingService () {
             }
             let mapedBeers = beers.map(beer => {
                 return {
+                id: beer.id,
                 name: beer.name,
                 alcohol: beer.abv,
                 bitterness: beer.ibu,
@@ -100,14 +144,15 @@ function DataProcessingService () {
 
         for (let beer of beerArray) {
             let col = `<div class="col-md-3">
-                <div class="card" style="width: 18rem;">
-                    <img src="${beer.img}" height="150" class="card-img-top" alt="${beer.name} beer picture">
+                <div class="card" style="width: 18rem;" id="${beer.id}">
+                    <img src="${beer.img}" height="230" class="card-img-top"  alt="${beer.name} beer picture">
                     <div class="card-body">
                         <h5 class="card-title">${beer.name}</h5>
                         <p class="card-text">
                             <b>Alcohol</b>: ${beer.alcohol}%,
                             <b>Bitterness</b>: ${beer.bitterness} ibu,
                             <b>Production date</b>: ${beer.productionDate}
+                            <a href="#" class="btn btn-primary" id="${beer.id}">More details</a>
                         </p>
                     </div>
                 </div>
@@ -126,13 +171,13 @@ function DataProcessingService () {
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                    <img src="./img/homeScreen.png" class="d-block w-100" alt="...">
+                    <img src="./img/beer_bar_3.jpg" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
-                    <img src="./img/beersScreen.png" class="d-block w-100" alt="...">
+                    <img src="./img/beer_bar_2.jpg" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
-                    <img src="./img/moreDeailsScreen.png" class="d-block w-100" alt="...">
+                    <img src="./img/beer_bar_1.jpg" class="d-block w-100" alt="...">
                     </div>
                 </div>
             </div>
@@ -142,10 +187,14 @@ function DataProcessingService () {
     this.getRandomBeer = function (element) {
         this.apicalls.callRandomBeer()
         .then(data => this.mapBeers(data))
-        .then(beer => {
-            this.showFullDetails(beer, element);
-            console.log(beer)
-        })
+        .then(beer => this.showFullDetails(beer, element))
+        .catch(error => console.log(error))
+    }
+    
+    this.getBeerById = function (id, element) {
+        this.apicalls.callBeerById(id)
+        .then(data => this.mapBeers(data))
+        .then(beer => this.showFullDetails(beer, element))
         .catch(error => console.log(error))
     }
 
@@ -156,7 +205,7 @@ function DataProcessingService () {
             <div class="row">
                 <div class="col-md-3">
                     <div class="card" style="width: 18rem;">
-                        <img src="${beer.img}" height="150" class="card-img-top" alt="${beer.name} beer picture">
+                        <img src="${beer.img}" height="230" class="card-img-top" alt="${beer.name} beer picture">
                         <div class="card-body">
                             <h5 class="card-title">${beer.name}</h5>
                             <p class="card-text">
@@ -181,8 +230,8 @@ function DataProcessingService () {
         
     }
 
-    this.showButtons = function (nextBtn, prevBtn, page){
-        if(page === 13) {
+    this.showButtons = function (nextBtn, prevBtn, page, maxPage){
+        if(page === maxPage) {
             nextBtn.style.display = "none";
         } else {
             nextBtn.style.display = "block";
@@ -195,14 +244,78 @@ function DataProcessingService () {
         }   
 
     }
-     
+
+    // ja povikav posle maperot i mi vrati error. mislev deka mora da imam promise.
+    /*this.sortByChosenOption = function (beers, sortBy) {
+        return new Promise ((resolve, reject) => {
+            if(!beers || beers.length === 0) {
+                reject('Something went wrong');
+            }
+            // let sortedBeers = beers.sort((beer1, beer2) =>   
+            // // sort by name - Ascending         
+            //     // if (beer1.name < beer2.name) {
+            //     //     return -1;
+            //     // }
+            //     // if (beer1.name > beer2.name) {
+            //     //     return 1;
+            //     // }
+            //     // return 0;
+
+            // // sort by  - Descending
+            // // if (beer1.id > beer2.id) {
+            // //     return -1;
+            // // }
+            // // if (beer1.id < beer2.id) {
+            // //     return 1;
+            // // }
+            // // return 0;
+
+            // //Short version - without curly brackets
+            //     //is this ok?
+            // //beer1.name > beer2.name? -1:1
+
+            // //Short version - with curly brackets
+            // // {return (beer1.name > beer2.name) ? -1:1}
+            // beer1.name > beer2.name? -1:1 
+            // );
+
+            
+            let sortedBeers = this.dataProcessingService.sortingScenarios(beers, sortBy);
+            console.log(sortedBeers);
+            resolve(sortedBeers);
+        })
+    }*/
+
+    this.sortingScenarios = function (beers, sortBy) {
+            switch (sortBy) {
+                case "name-asc":
+                    return beers.sort((beer1, beer2) => beer1.name > beer2.name? 1:-1);
+                case "name-dsc":
+                    return beers.sort((beer1, beer2) => beer1.name > beer2.name? -1:1);
+                case "alcohol-asc":
+                    return beers.sort((beer1, beer2) => beer1.alcohol > beer2.alcohol? 1:-1);
+                case "alcohol-dsc":
+                    return beers.sort((beer1, beer2) => beer1.alcohol > beer2.alcohol? -1:1);
+                case "bitternes-asc":
+                    return beers.sort((beer1, beer2) => beer1.bitternes > beer2.alcohol? 1:-1);
+                case "bitternes-dsc":
+                    return beers.sort((beer1, beer2) => beer1.bitternes > beer2.alcohol? -1:1);
+                case "date-asc":
+                    return beers.sort((beer1, beer2) => beer1.productionDate > beer2.alcohol? 1:-1);
+                case "date-dsc":
+                    return beers.sort((beer1, beer2) => beer1.productionDate > beer2.alcohol? -1:1);
+                default:
+                    throw new Error("Not available sort");
+            }
+        }
 }
+
 
 function ApiCalls (){
     this.baseUrl = "https://api.punkapi.com/v2/beers/";
 
-    this.getDataFromApi = function(page) {
-       let url = `${this.baseUrl}?page=${page}`;
+    this.getDataFromApi = function(page,resultsPerPage) {
+       let url = `${this.baseUrl}?page=${page}&per_page=${resultsPerPage}`;
        return fetch(url);
     }
 
@@ -227,7 +340,25 @@ function ApiCalls (){
         return await response.json();
     }
 
+    this.callBeerById = function (id) {
+        let url = `${this.baseUrl}?ids=${id}`;
+        return new Promise ((resolve, reject) => {
+            $.ajax({
+                url:url,
+                success: function (response) {
+                    resolve(response);
+                },
+                error: function (error) {
+                    reject(error);
+                }
+            })
+        })
+    }
+
 }
 
-let app = new App();
-app.init();
+
+$(document).ready(function () {
+    let app = new App();
+    app.init();
+});
