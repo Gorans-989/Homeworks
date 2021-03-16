@@ -285,7 +285,7 @@ function DataProcessingService () {
             resolve(sortedBeers);
         })
     }*/
-
+        //sortingot za date treba da go sredam
     this.sortingScenarios = function (beers, sortBy) {
             switch (sortBy) {
                 case "name-asc":
@@ -297,13 +297,13 @@ function DataProcessingService () {
                 case "alcohol-dsc":
                     return beers.sort((beer1, beer2) => beer1.alcohol > beer2.alcohol? -1:1);
                 case "bitternes-asc":
-                    return beers.sort((beer1, beer2) => beer1.bitternes > beer2.alcohol? 1:-1);
+                    return beers.sort((beer1, beer2) => beer1.bitterness > beer2.bitterness? 1:-1);
                 case "bitternes-dsc":
-                    return beers.sort((beer1, beer2) => beer1.bitternes > beer2.alcohol? -1:1);
+                    return beers.sort((beer1, beer2) => beer1.bitterness > beer2.bitterness? -1:1);
                 case "date-asc":
-                    return beers.sort((beer1, beer2) => beer1.productionDate > beer2.alcohol? 1:-1);
+                    return beers.sort((beer1, beer2) => beer1.productionDate > beer2.productionDate? 1:-1);
                 case "date-dsc":
-                    return beers.sort((beer1, beer2) => beer1.productionDate > beer2.alcohol? -1:1);
+                    return beers.sort((beer1, beer2) => beer1.productionDate > beer2.productionDate? -1:1);
                 default:
                     throw new Error("Not available sort");
             }
