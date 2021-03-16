@@ -48,3 +48,31 @@ let maleSort = studentArray
                     // console.log(maleSort)
                     .filter(students => students.firstName[0] === 'B' && students.averageGrade > 2)
 console.log(maleSort);
+
+// Create a Constructor function for product. Each product has property name, category, hasDiscount and price.
+// Create an array of 15 products. 
+// Now answer the following requirements:
+
+// * Find all products with price greater than 20.
+// * Get the names of all products of Category Food, that are on discount.
+// * The average price of all products that are on discount.
+// * Find the name and price of all products with name starting with a vowel, that are not on discount.
+// * Sort the products by price, ascending, without changing the original array.
+
+// Use higher order functions to find the answers.
+
+function Product (name, category, discount, price) {
+    this.name = name;
+    this.category = category;
+    this.hasDiscount = discount;
+    this.price = price;
+}
+
+let products = [new Product('mleko', 'pijaloci', true, 60), new Product('sok', 'pijaloci', true, 48), new Product('oriz', 'hrana', false, 30), new Product('rebra', 'hrana', false, 240), new Product('pivo', 'pijaloci', true, 40), new Product('giro', 'hrana', true, 150)];
+
+let priceGreaterThan20 = products.filter(product => product.price > 50);
+let noDiscount = products.filter(product => !product.hasDiscount);
+let onDiscount = products.filter(product => product.hasDiscount === true);
+let average = onDiscount.forEach(product => {
+    return product.price;})
+
