@@ -25,3 +25,11 @@ https://raw.githubusercontent.com/sedc-codecademy/sedc6-frontend-exam/master/ban
 * Search box that allow the user to filter the bands by name
 * Dropdown menu with tags, and filter only bands that are having that tag
 * Paging controls.
+
+0:
+active: true
+albums: (13) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+members: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+name: "Metallica"
+tags: (5) ["thrash metal", "metal", "heavy metal", "hard rock", "rock"]
+__proto__: Object
