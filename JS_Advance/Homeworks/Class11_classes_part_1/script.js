@@ -13,33 +13,42 @@ class Animal {
             //  
             if (this.type === "herbivore") {
                 console.log(`The animal ${this.name} is a herbivore and does not eat other animals`);
+            }  
+        }
+        if(input instanceof Animal && this.type !== "herbivore" )
+        {
+            if(input.size /2 >= this.size)
+            {
+                console.log(`${this.name} tried to eat the ${input.name} but is was to large`)
             }
-            if (this.type !== "herbivore") {  
-                //probav da go skratam ama ne mi se dopagja, ne e citko
-                // input.size / 2 >= this.size? console.log(`The animal ${this.name} tried to eat the ${input.name} but it was too large`): input.isEaten = true && console.log (`The animal ${this.name} ate the ${input.name}`
-                // )
-
-                if (input.size / 2 >= this.size) {
-                    console.log (`The animal ${this.name} tried to eat the ${input.name} but it was too large`)
-                }
-                if (input.size / 2 < this.size) {
-                    input.isEaten = true;
-                    console.log (`The animal ${this.name} ate the ${input.name}`
-                    )
-                }
-            } else if (!(input instanceof Animal)) {
-                console.log (`The animal ${this.name} is eating ${input}`);
+            else
+            {
+                this.isEaten = true;
+                console.log(`the animal ${this.name} ate the ${input.name}`);    
             }
         }
+        if(!(input instanceof Animal))
+        {
+            console.log(`${this.name} is eating the ${input.name}`);
+
+        }
+
     }
-}
+} 
+
 
 let typeOfAnimal = ["carnivore", "herbivore", "omnivore"];
-let dog = new Animal ("sputnik", 12, typeOfAnimal[1], 120);
-let elephant = new Animal ('dambo', 6, typeOfAnimal[1], 500);
+let dog = new Animal ("sputnik", 12, "herbivore", 120);
+let elephant = new Animal ('dambo', 6, typeOfAnimal[1], 600);
 let crocodile = new Animal ('koko', 7, typeOfAnimal[0], 250);
 let tiger = new Animal ('misko', 9, typeOfAnimal[2], 300);
 let hippo = new Animal ('bobo', 14, typeOfAnimal[1], 420);
+
+dog.eat(crocodile);
+tiger.eat(elephant);
+crocodile.eat(dog);
+elephant.eat(tiger);
+
 
 
 class Person {
@@ -51,7 +60,7 @@ class Person {
     }
 
     fullName = () => {
-        return console.log(`${this.firstName} ${this.lastName}`);
+        return `${this.firstName} ${this.lastName}`;
     }
 
     // ne mi se jasni getter i setter!
@@ -80,15 +89,23 @@ class Student extends Person {
     }
 
     static studentMethod (student, subject) {
-        if(student instanceof Student) {
-            if (student.subjects.includes(subject)) {
+        if(student instanceof Student)
+        {
+            if (student.subjects.includes(subject))
+            {
+                
                 console.log(`The student ${student.firstName} ${student.lastName} is already studying ${subject}`);
             }
-            else {
-                console.log(`The student ${student.firstName} ${student.lastName} doesnt study ${subject}`);
+            else 
+            {
+                console.log(`The student:${student.fullName()} doesnt study ${subject}`);
             }
         }
-        else { throw new Error ("The first parameter is not a student")}
+        if(!(student instanceof Student))
+        {
+            { throw new Error ("pero")}
+        }
+        // else { throw new Error ("The first parameter is not of type student")}
     }
 }
 
@@ -97,4 +114,14 @@ let student2 = new Student('iva', 'petrova', 31, 'razloska', ["history", "englis
 
 Student.studentMethod(student1, "science");
 Student.studentMethod(student2, "fizicko");
-Student.studentMethod(dog, "english");
+//Student.studentMethod(dog, "english");
+
+try 
+{
+    Student.studentMethod(dog, "english")
+
+} catch (error) 
+{
+    console.log(error)
+    
+}
