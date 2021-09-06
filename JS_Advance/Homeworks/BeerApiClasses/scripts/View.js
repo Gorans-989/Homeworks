@@ -25,7 +25,7 @@ class view
     
         html += "</div>";
         element.innerHTML = html;
-    }
+    };
     
     static showFullDetails = (beerArray, element) => 
     {
@@ -39,7 +39,7 @@ class view
                     <div class="card-body">
                         <h5 class="card-title">${beer.name}</h5>
                             <p class="card-text">
-                            <b>Tagline</b>: ${beer.tagline}</br>
+                            <b>Tagline</b>: ${beer.tagLine}</br>
                             <b>Description</b>: ${beer.description}<br/>
                             <b>Alcohol</b>: ${beer.abv}%<br/>
                             <b>Bitterness</b>: ${beer.bitterness} ibu<br/>
@@ -54,8 +54,44 @@ class view
     
         html += "</div>";
         element.innerHTML = html;
-    }
+    };
     
+    static homePage = (element) => 
+    {
+        element.innerHTML = "";
+        element.innerHTML = `
+            <div class="container"  id="result">
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                        <img src="./img/beer_bar_3.jpg" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                        <img src="./img/beer_bar_2.jpg" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                        <img src="./img/beer_bar_1.jpg" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
+    };
+    static showSortingAndResultPerPage = (sorting, resultsPerPage) => 
+    {
+        sorting.style.display = "block";
+        resultsPerPage.style.display = "block";
+    }
+    static removeSortingAndResultPerPage = (sorting, resultsPerPage) => 
+    {
+        sorting.style.display = "none";
+        resultsPerPage.style.display = "none";
+    }
+    static showNextBtn = (element) => {element.style.display = "block";};
+    static showPrevBtn = (element) => {element.style.display = "block";};
+    static removeNextBtn = element => {element.style.display = "none";};
+    static removePreviousBtn = element => {element.style.display = "none";};
+
 
 }
 

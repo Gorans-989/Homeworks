@@ -20,12 +20,18 @@ const apiCalls =
         });
     },
 
-    getElementById(id)
+    getElementById: async (id) =>
     {
-        const url3 = this.url + `${id}`
-        return fetch(url3);
+        //this.url + `/${id}`;
+        const url3 = `https://api.punkapi.com/v2/beers/${id}`;
+        return await fetch(url3);
+    },
+
+    getElementByName: async (name) => 
+    {   // mi dava error. da vidime sto e.
+        const parametar = !name ? "" : `?beer_name=${name}`;
+        const url4 = `https://api.punkapi.com/v2/beers${parametar}`;
+        return await fetch(url4);
     }
-
-
 
 }

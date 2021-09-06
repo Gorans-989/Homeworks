@@ -41,4 +41,12 @@ class DataProcessingService
         .catch(error => console.log(error))
    }
 
+   getBeerByName = async (name) => 
+   {
+        return await apiCalls.getElementByName(name)
+        .then(response => response.json())
+        .then(data => this.mapBeers(data))
+        .catch(error => console.log(error))
+
+   }
 }
