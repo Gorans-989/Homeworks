@@ -66,13 +66,13 @@ const controller =
         });
         // getBeerByname
         searchBtn.addEventListener("click", () => {
-            const search = searchInput.value; 
-            dataProcessingService.getBeerByName(search)
+            let searchBar = searchInput.value; 
+            dataProcessingService.getBeerByName(searchBar)
             .then(data => view.showFullDetails(data, result))
             view.removeNextBtn(elements.nextBtn);
             view.removePreviousBtn(elements.previousBtn);
             view.removeSortingAndResultPerPage(sortingBtn, resultsPerPage);
-            search.clear
+            searchInput.value = "";
         })
     }
 }
