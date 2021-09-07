@@ -7,15 +7,16 @@ let resultsPerPage = document.getElementById("resultsPerPage");
 let searchInput = document.getElementById("searchInput");
 let searchBtn = document.getElementById("searchBtn");
 let currentPage = 1;
-let maxPage = 0;
+let perPage = 25;
+let maxPage = Math.ceil(325 / perPage);
+let sortBy = "";
 
+//325 elements in array
 const elements = {
     // dali e podobro da bidat spakuvani vo objekt ili da bidat nadvor vo skriptata?
     previousBtn: document.getElementById("previousBtn"),
     nextBtn: document.getElementById("nextBtn")
 }
-
-// ja instanciram klasata.
 const dataProcessingService = new DataProcessingService();
 
 const controller = 
@@ -25,16 +26,14 @@ const controller =
     {
         allBeers.addEventListener("click", async () => 
         {   // so await kopcinjata nema da se pojavat dodeka ne zavrsi funckijata get all beers
-            await dataProcessingService.getAllBeers()
+            currentPage = 1;
+            perPage = 25;
+            await dataProcessingService.getAllBeers(currentPage, perPage)
             .then(data => view.showAllBeers(data, result));
             view.showSortingAndResultPerPage(sortingBtn,resultsPerPage);
-            view.showPrevBtn(elements.previousBtn);
             view.showNextBtn(elements.nextBtn);
-            //da se sredi sorting so drop down menu
-            //da se sredi result per page - toa posledno
-            //da se sredat kopcinjata
         });
-
+        // show random beer
         randomBeer.addEventListener("click", async () =>
         {
             await dataProcessingService.getRandomBeer() // async / await - primena, prednosti , negativnosti
@@ -55,7 +54,6 @@ const controller =
             view.removePreviousBtn(elements.previousBtn);
             view.removeSortingAndResultPerPage(sortingBtn, resultsPerPage);
         });
-
         // home page or beer bar
         homePage.addEventListener("click", () => 
         {   
@@ -65,14 +63,47 @@ const controller =
             view.removeSortingAndResultPerPage(sortingBtn, resultsPerPage);
         });
         // getBeerByname
-        searchBtn.addEventListener("click", () => {
-            let searchBar = searchInput.value; 
-            dataProcessingService.getBeerByName(searchBar)
+        searchBtn.addEventListener("click", () => { 
+            dataProcessingService.getBeerByName(searchInput.value)
             .then(data => view.showFullDetails(data, result))
             view.removeNextBtn(elements.nextBtn);
             view.removePreviousBtn(elements.previousBtn);
             view.removeSortingAndResultPerPage(sortingBtn, resultsPerPage);
             searchInput.value = "";
-        })
+        });
+        //nextButton
+        elements.nextBtn.addEventListener("click", async () => {
+            currentPage++;
+            if(currentPage === maxPage) {
+                elements.nextBtn.style.display = "none";
+            }
+            await dataProcessingService.getAllBeers(currentPage, perPage)
+            .then(data => view.showAllBeers(data, result));
+            view.showPrevBtn(elements.previousBtn);
+        });
+        //previous button
+        elements.previousBtn.addEventListener("click", async () => {
+            currentPage--;
+            if(currentPage === 1){
+                elements.previousBtn.style.display = "none";
+            }
+            await dataProcessingService.getAllBeers(currentPage, perPage)
+            .then(data => view.showAllBeers(data, result));
+        });
+        // result per page
+        resultsPerPage.addEventListener("change", async (event) => {
+            perPage = event.target.value;
+            await dataProcessingService.getAllBeers(currentPage, perPage)
+            .then(data => view.showAllBeers(data, result));
+            // kako da go iscistam inputot;
+        });
+        //sorting data
+        sortingBtn.addEventListener("change", async(event) => {
+            sortBy = event.target.value;
+            await dataProcessingService.getAllBeers(currentPage, perPage)
+            .then(data => dataProcessingService.sortScenario(data, sortBy))
+            .then(sortedData => view.showAllBeers(sortedData, result));
+            
+        });
     }
 }

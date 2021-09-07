@@ -1,4 +1,3 @@
 $(document).ready(function () {
-    
-    controller.init()
+    controller.init();
 });

@@ -81,6 +81,7 @@ class view
     {
         sorting.style.display = "block";
         resultsPerPage.style.display = "block";
+        
     }
     static removeSortingAndResultPerPage = (sorting, resultsPerPage) => 
     {
@@ -92,6 +93,20 @@ class view
     static removeNextBtn = element => {element.style.display = "none";};
     static removePreviousBtn = element => {element.style.display = "none";};
 
+    // static showRemove = function (nextBtn, prevBtn, page, maxPage){
+    //     if(page === maxPage) {
+    //         nextBtn.style.display = "none";
+    //     } else {
+    //         nextBtn.style.display = "block";
+    //     }
+
+    //     if(page === 1) {
+    //         prevBtn.style.display = "none";
+    //     } else {
+    //         prevBtn.style.display = "block";
+    //     }   
+
+    // }
 
 }
 

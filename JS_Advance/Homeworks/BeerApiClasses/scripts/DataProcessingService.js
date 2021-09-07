@@ -1,9 +1,8 @@
 class DataProcessingService
 {
-    
-    getAllBeers = async ()=> 
+    getAllBeers = async (pageNumber, perPage)=> 
     {
-       return await apiCalls.getAllData()
+       return await apiCalls.getAllData(pageNumber, perPage)
        .then(response => response.json())
        .then(data => this.mapBeers(data))
        .catch(error => console.log(error))
@@ -22,8 +21,6 @@ class DataProcessingService
 
     };
 
-    
-
     getRandomBeer = async () => 
     {
         return await apiCalls.getRandomElement()
@@ -33,20 +30,42 @@ class DataProcessingService
 
     }
 
-   getBeerById = async (id) => 
-   {
+    getBeerById = async (id) => 
+    {
         return await apiCalls.getElementById(id)
         .then(response => response.json())
         .then(data => this.mapBeers(data))
         .catch(error => console.log(error))
-   }
+    }
 
-   getBeerByName = async (name) => 
-   {
+    getBeerByName = async (name) => 
+    {
         return await apiCalls.getElementByName(name)
         .then(response => response.json())
         .then(data => this.mapBeers(data))
         .catch(error => console.log(error))
+    }
+    sortScenario(data, sortOption) {
+        switch (sortOption) {
+            case "name-asc":
+                return data.sort( (beer1, beer2) => beer1.name > beer2.name? 1:-1);
+            case "name-dsc":
+                return data.sort( (beer1, beer2) => beer1.name > beer2.name? -1:1);
+            case "alcohol-asc":
+                return data.sort((beer1, beer2) => beer1.abv > beer2.abv? 1:-1);
+            case "alcohol-dsc":
+                return data.sort((beer1, beer2) => beer1.abv > beer2.abv? -1:1);
+            case "bitternes-asc":
+                return data.sort((beer1, beer2) => beer1.bitterness > beer2.bitterness? 1:-1);
+            case "bitternes-dsc":
+                return data.sort((beer1, beer2) => beer1.bitterness > beer2.bitterness? -1:1);
+            case "date-asc":
+                return data.sort((beer1, beer2) => beer1.productionDate > beer2.productionDate? 1:-1);
+            case "date-dsc":
+                return data.sort((beer1, beer2) => beer1.productionDate > beer2.productionDate? 1:-1);
+            default:
+                throw new Error("Not available sort");
+        }
 
-   }
+    }
 }
