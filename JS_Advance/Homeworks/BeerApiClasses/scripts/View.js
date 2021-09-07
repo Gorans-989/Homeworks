@@ -105,8 +105,5 @@ class view
     //     } else {
     //         prevBtn.style.display = "block";
     //     }   
-
     // }
-
 }
-
