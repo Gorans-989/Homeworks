@@ -1,0 +1,1 @@
+console.log("Hello Goran, from node.js");
