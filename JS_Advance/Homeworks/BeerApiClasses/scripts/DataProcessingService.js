@@ -4,6 +4,7 @@ class DataProcessingService
     {
        return await apiCalls.getAllData(pageNumber, perPage)
        .then(response => response.json())
+    //    .then(data0 => console.log(data0))
        .then(data => this.mapBeers(data))
        .catch(error => console.log(error))
     }

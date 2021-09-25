@@ -44,7 +44,7 @@ class view
                             <b>Alcohol</b>: ${beer.abv}%<br/>
                             <b>Bitterness</b>: ${beer.bitterness} ibu<br/>
                             <b>Production date</b>: ${beer.productionDate}<br/>
-                            <b>Food pairing</b>: ${beer.food_pairing}
+                            <b>Food pairing</b>: ${beer.foodPairing}
                         </p>
                     </div>
                 </div>

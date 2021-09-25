@@ -3,7 +3,11 @@ const apiCalls =
     url:"https://api.punkapi.com/v2/beers",
     getAllData: async function (pageNumber, perPage)
     {
-        const url0 = `https://api.punkapi.com/v2/beers?page=${pageNumber}&per_page=${perPage}`;
+        const url0 = `${this.url}?page=${pageNumber}&per_page=${perPage}`;
+        // const data = await fetch(url0)
+        // console.log(data)
+        // const res = await data.body;
+        // console.log(res)
         return await fetch(url0)
     },
 
@@ -30,8 +34,11 @@ const apiCalls =
 
     getElementByName: async (name) => 
     {   // mi dava error. da vidime sto e.
+        console.log("TUKA SUUUUUUUUUUUUUUUM")
         const parametar = !name ? "" : `?beer_name=${name}`;
         const url4 = `https://api.punkapi.com/v2/beers${parametar}`;
+        const data = await fetch(url4);
+        console.log(data)
         return await fetch(url4);
     },
     
@@ -44,3 +51,4 @@ const apiCalls =
 
     // }
 }
+

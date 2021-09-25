@@ -63,9 +63,14 @@ const controller =
             view.removeSortingAndResultPerPage(sortingBtn, resultsPerPage);
         });
         // getBeerByname
-        searchBtn.addEventListener("click", () => { 
+        searchBtn.addEventListener("click", (event) => { 
+            event.preventDefault();
+            console.log("search input", searchInput.value)
             dataProcessingService.getBeerByName(searchInput.value)
-            .then(data => view.showFullDetails(data, result))
+            .then(data => {
+                console.log("zi data", data)
+                view.showFullDetails(data, result)
+            })
             view.removeNextBtn(elements.nextBtn);
             view.removePreviousBtn(elements.previousBtn);
             view.removeSortingAndResultPerPage(sortingBtn, resultsPerPage);
